@@ -120,10 +120,11 @@ send_paxos_trim(struct bufferevent* bev, paxos_trim* t)
 }
 
 void
-paxos_submit(struct bufferevent* bev, char* data, int size)
+paxos_submit(struct bufferevent* bev, char* data, int size, uint32_t from_client)
 {
 	paxos_message msg = {
 		.type = PAXOS_CLIENT_VALUE,
+		.u.client_value.from_client = from_client,
 		.u.client_value.value.paxos_value_len = size,
 		.u.client_value.value.paxos_value_val = data };
 	send_paxos_message(bev, &msg);

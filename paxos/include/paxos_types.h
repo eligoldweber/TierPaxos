@@ -103,6 +103,7 @@ typedef struct paxos_acceptor_state paxos_acceptor_state;
 
 struct paxos_client_value
 {
+	uint32_t from_client;
 	paxos_value value;
 };
 typedef struct paxos_client_value paxos_client_value;

@@ -58,6 +58,12 @@ peer_send_accept(struct peer* p, void* arg)
 }
 
 static void
+peer_fwd_client(struct peer* p, void* arg) 
+{
+	send_paxos_message(peer_get_buffer(p), arg);
+}
+
+static void
 proposer_preexecute(struct evproposer* p)
 {
 	int i;
@@ -114,11 +120,19 @@ evproposer_handle_preempted(struct peer* p, paxos_message* msg, void* arg)
 	}
 }
 
+
 static void
 evproposer_handle_client_value(struct peer* p, paxos_message* msg, void* arg)
 {
 	struct evproposer* proposer = arg;
 	struct paxos_client_value* v = &msg->u.client_value;
+	if (v->from_client) {
+		paxos_message fwd;
+		fwd.type = msg->type;
+		fwd.u.client_value = msg->u.client_value;
+		fwd.u.client_value.from_client = 0;
+		peers_foreach_acceptor(proposer->peers, peer_fwd_client, &fwd);
+	}
 	proposer_propose(proposer->state,
 		v->value.paxos_value_val,
 		v->value.paxos_value_len);
