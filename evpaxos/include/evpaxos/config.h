@@ -50,6 +50,7 @@ struct evpaxos_config
 	int acceptors_count;
 	int cluster_num;
 	int cluster_size;
+	int client_q_size;
 	struct address proposers[MAX_N_OF_PROPOSERS];
 	struct address acceptors[MAX_N_OF_PROPOSERS];
 };
