@@ -166,7 +166,7 @@ struct evproposer*
 evproposer_init_internal(int id, struct evpaxos_config* c, struct peers* peers)
 {
 	struct evproposer* p;
-	int acceptor_count = evpaxos_acceptor_count(c);
+//	int acceptor_count = evpaxos_acceptor_count(c);
 
 	p = malloc(sizeof(struct evproposer));
 	p->id = id;
@@ -186,7 +186,8 @@ evproposer_init_internal(int id, struct evpaxos_config* c, struct peers* peers)
 	p->timeout_ev = evtimer_new(base, evproposer_check_timeouts, p);
 	event_add(p->timeout_ev, &p->tv);
 	
-	p->state = proposer_new(p->id, acceptor_count);
+//	p->state = proposer_new(p->id, acceptor_count);
+    p->state = proposer_new(p->id, c->cluster_size);
 	p->peers = peers;
 	
 	event_base_once(base, 0, EV_TIMEOUT, evproposer_preexec_once, p, NULL);

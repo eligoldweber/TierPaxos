@@ -1,0 +1,85 @@
+Start testing: Nov 28 11:24 EST
+----------------------------------------------------------
+1/1 Testing: unit-tests
+1/1 Test: unit-tests
+Command: "/Users/eligoldweber/Desktop/Michigan/School/1Fall2018/DistSystems/Research/libpaxos/build/unit/runtest"
+Directory: /Users/eligoldweber/Desktop/Michigan/School/1Fall2018/DistSystems/Research/libpaxos/build/unit
+"unit-tests" start time: Nov 28 11:24 EST
+Output:
+----------------------------------------------------------
+[==========] Running 62 tests from 6 test cases.
+[----------] Global test environment set-up.
+[----------] 8 tests from LearnerTest
+[ RUN      ] LearnerTest.Learn
+[       OK ] LearnerTest.Learn (1 ms)
+[ RUN      ] LearnerTest.LearnInOrder
+[       OK ] LearnerTest.LearnInOrder (0 ms)
+[ RUN      ] LearnerTest.IgnoreDuplicates
+[       OK ] LearnerTest.IgnoreDuplicates (0 ms)
+[ RUN      ] LearnerTest.LearnMajority
+[       OK ] LearnerTest.LearnMajority (0 ms)
+[ RUN      ] LearnerTest.IgnoreOlderBallot
+[       OK ] LearnerTest.IgnoreOlderBallot (0 ms)
+[ RUN      ] LearnerTest.NoHoles
+[       OK ] LearnerTest.NoHoles (0 ms)
+[ RUN      ] LearnerTest.OneHole
+[       OK ] LearnerTest.OneHole (0 ms)
+[ RUN      ] LearnerTest.ManyHoles
+[       OK ] LearnerTest.ManyHoles (0 ms)
+[----------] 8 tests from LearnerTest (1 ms total)
+
+[----------] 16 tests from ProposerTest
+[ RUN      ] ProposerTest.Prepare
+[       OK ] ProposerTest.Prepare (0 ms)
+[ RUN      ] ProposerTest.IgnoreOldBallots
+[       OK ] ProposerTest.IgnoreOldBallots (0 ms)
+[ RUN      ] ProposerTest.IgnoreDuplicatePrepareAcks
+[       OK ] ProposerTest.IgnoreDuplicatePrepareAcks (0 ms)
+[ RUN      ] ProposerTest.PrepareAndAccept
+[       OK ] ProposerTest.PrepareAndAccept (0 ms)
+[ RUN      ] ProposerTest.PreparePreempted
+[       OK ] ProposerTest.PreparePreempted (0 ms)
+[ RUN      ] ProposerTest.PrepareAlreadyClosed
+[       OK ] ProposerTest.PrepareAlreadyClosed (0 ms)
+[ RUN      ] ProposerTest.PreparePreemptedWithTwoValues
+[       OK ] ProposerTest.PreparePreemptedWithTwoValues (0 ms)
+[ RUN      ] ProposerTest.AcceptPreempted
+[       OK ] ProposerTest.AcceptPreempted (0 ms)
+[ RUN      ] ProposerTest.PreparedCount
+[       OK ] ProposerTest.PreparedCount (0 ms)
+[ RUN      ] ProposerTest.PendingPrepareShouldTimeout
+[       OK ] ProposerTest.PendingPrepareShouldTimeout (1000 ms)
+[ RUN      ] ProposerTest.PreparedShouldNotTimeout
+[       OK ] ProposerTest.PreparedShouldNotTimeout (1000 ms)
+[ RUN      ] ProposerTest.PendingAcceptShouldTimeout
+[       OK ] ProposerTest.PendingAcceptShouldTimeout (1002 ms)
+[ RUN      ] ProposerTest.AcceptedShouldNotTimeout
+[       OK ] ProposerTest.AcceptedShouldNotTimeout (1003 ms)
+[ RUN      ] ProposerTest.ShouldNotTimeoutTwice
+[       OK ] ProposerTest.ShouldNotTimeoutTwice (1003 ms)
+[ RUN      ] ProposerTest.AvoidDuplicateProposals
+[       OK ] ProposerTest.AvoidDuplicateProposals (0 ms)
+[ RUN      ] ProposerTest.SetInstanceId
+[       OK ] ProposerTest.SetInstanceId (0 ms)
+[----------] 16 tests from ProposerTest (5009 ms total)
+
+[----------] 3 tests from ConfigTest
+[ RUN      ] ConfigTest.TooManyProcesses
+[       OK ] ConfigTest.TooManyProcesses (0 ms)
+[ RUN      ] ConfigTest.Folder
+[       OK ] ConfigTest.Folder (0 ms)
+[ RUN      ] ConfigTest.Replicas
+[       OK ] ConfigTest.Replicas (1 ms)
+[----------] 3 tests from ConfigTest (1 ms total)
+
+[----------] 1 test from ReplicaTest
+[ RUN      ] ReplicaTest.TotalOrderDelivery
+<end of output>
+Test time =   5.02 sec
+----------------------------------------------------------
+Test Failed.
+"unit-tests" end time: Nov 28 11:24 EST
+"unit-tests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+End testing: Nov 28 11:24 EST

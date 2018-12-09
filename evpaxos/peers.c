@@ -136,6 +136,17 @@ peers_connect_to_acceptors(struct peers* p)
 		peers_connect(p, i, &addr);
 	}
 }
+void
+peers_connect_to_acceptors_TIER(struct peers* p, struct evpaxos_config* config,int id)
+{
+    int i;
+    int cluster = id / p->config->cluster_size;
+    int start = cluster*p->config->cluster_num;
+    for (i = start; i < p->config->cluster_size + start; i++) {
+        struct sockaddr_in addr = evpaxos_acceptor_address(p->config, i);
+        peers_connect(p, i, &addr);
+    }
+}
 
 void
 peers_foreach_acceptor(struct peers* p, peer_iter_cb cb, void* arg)
@@ -239,6 +250,12 @@ on_read(struct bufferevent* bev, void* arg)
 	struct peer* p = (struct peer*)arg;
 	struct evbuffer* in = bufferevent_get_input(bev);
 	while (recv_paxos_message(in, &msg)) {
+        if(msg.type == PAXOS_ACCEPTED){
+            printf("PAXOS_ACCEPTED");
+        }
+        if(msg.type == PAXOS_ACCEPTOR_STATE){
+            printf("PAXOS_ACCEPTOR_STATE!");
+        }
 		dispatch_message(p, &msg);
 		paxos_message_destroy(&msg);
 	}

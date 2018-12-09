@@ -59,7 +59,7 @@ static struct instance* instance_new(int acceptors);
 static void instance_free(struct instance* i, int acceptors);
 static void instance_update(struct instance* i, paxos_accepted* ack, int acceptors);
 static int instance_has_quorum(struct instance* i, int acceptors);
-static void instance_add_accept(struct instance* i, paxos_accepted* ack);
+static void instance_add_accept(struct instance* i, paxos_accepted* ack,int acceptors);
 static paxos_accepted* paxos_accepted_dup(paxos_accepted* ack);
 static void paxos_value_copy(paxos_value* dst, paxos_value* src);
 
@@ -211,6 +211,8 @@ instance_update(struct instance* inst, paxos_accepted* accepted, int acceptors)
 		paxos_log_debug("Received first message for iid: %u", accepted->iid);
 		inst->iid = accepted->iid;
 		inst->last_update_ballot = accepted->ballot;
+//		paxos_log_debug("Hello Eli ");
+
 	}
 	
 	if (instance_has_quorum(inst, acceptors)) {
@@ -219,14 +221,14 @@ instance_update(struct instance* inst, paxos_accepted* accepted, int acceptors)
 		return;
 	}
 	
-	paxos_accepted* prev_accepted = inst->acks[accepted->aid];
+	paxos_accepted* prev_accepted = inst->acks[accepted->aid % acceptors ];
 	if (prev_accepted != NULL && prev_accepted->ballot >= accepted->ballot) {
 		paxos_log_debug("Dropped paxos_accepted for iid %u."
 			"Previous ballot is newer or equal.", accepted->iid);
 		return;
 	}
 	
-	instance_add_accept(inst, accepted);
+	instance_add_accept(inst, accepted,acceptors);
 }
 
 /* 
@@ -269,12 +271,12 @@ instance_has_quorum(struct instance* inst, int acceptors)
 	replacing the previous paxos_accepted, if any.
 */
 static void
-instance_add_accept(struct instance* inst, paxos_accepted* accepted)
+instance_add_accept(struct instance* inst, paxos_accepted* accepted, int acceptors)
 {
 	int acceptor_id = accepted->aid;
-	if (inst->acks[acceptor_id] != NULL)
-		paxos_accepted_free(inst->acks[acceptor_id]);
-	inst->acks[acceptor_id] = paxos_accepted_dup(accepted);
+	if (inst->acks[acceptor_id % acceptors] != NULL)
+		paxos_accepted_free(inst->acks[acceptor_id %3 ]);
+	inst->acks[acceptor_id % acceptors] = paxos_accepted_dup(accepted);
 	inst->last_update_ballot = accepted->ballot;
 }
 

@@ -29,17 +29,37 @@
 #ifndef _CONFIG_READER_H_
 #define _CONFIG_READER_H_
 
+
+#include <paxos.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+struct address
+{
+    char* addr;
+    int port;
+};
 
 struct evpaxos_config;
+struct evpaxos_config
+#include "paxos.h"
+
+{
+	int proposers_count;
+	int acceptors_count;
+	int cluster_num;
+	int cluster_size;
+	struct address proposers[MAX_N_OF_PROPOSERS];
+	struct address acceptors[MAX_N_OF_PROPOSERS];
+};
 
 struct evpaxos_config* evpaxos_config_read(const char* path);
 void evpaxos_config_free(struct evpaxos_config* config);
 struct sockaddr_in evpaxos_proposer_address(struct evpaxos_config* c, int i);
 int evpaxos_proposer_listen_port(struct evpaxos_config* c, int i);
 int evpaxos_acceptor_count(struct evpaxos_config* config);
+int evpaxos_cluster_count(struct evpaxos_config* config);
 struct sockaddr_in evpaxos_acceptor_address(struct evpaxos_config* c, int i);
 int evpaxos_acceptor_listen_port(struct evpaxos_config* c, int i);
 

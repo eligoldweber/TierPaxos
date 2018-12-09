@@ -48,6 +48,7 @@ struct peers* peers_new(struct event_base* base, struct evpaxos_config* config);
 void peers_free(struct peers* p);
 int peers_count(struct peers* p);
 void peers_connect_to_acceptors(struct peers* p);
+void peers_connect_to_acceptors_TIER(struct peers* p, struct evpaxos_config* config,int id);
 int peers_listen(struct peers* p, int port);
 void peers_subscribe(struct peers* p, paxos_message_type t, peer_cb cb, void*);
 void peers_foreach_acceptor(struct peers* p, peer_iter_cb cb, void* arg);

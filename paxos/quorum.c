@@ -57,9 +57,9 @@ quorum_destroy(struct quorum* q)
 int
 quorum_add(struct quorum* q, int id)
 {
-	if (q->acceptor_ids[id] == 0) {
+	if (q->acceptor_ids[id % q->acceptors] == 0) {
 		q->count++;
-		q->acceptor_ids[id] = 1;
+		q->acceptor_ids[id % q->acceptors] = 1;
 		return 1;
 	}
 	return 0;
@@ -68,5 +68,5 @@ quorum_add(struct quorum* q, int id)
 int
 quorum_reached(struct quorum* q)
 {
-	return (q->count >= q->quorum);
+	return (q->count >=2);
 }

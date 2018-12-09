@@ -9,17 +9,19 @@ tmux_test ()  {
 	tmux new-session -d -s paxos
 	tmux new-window -t paxos
 
-	for (( i = 0; i < 3; i++ )); do
+	for (( i = 0; i < 9; i++ )); do
 		tmux split
-		tmux select-layout even-vertical
+		tmux select-layout tile
 	done
 
-	for (( i = 0; i < 3; i++ )); do
-		tmux send-keys -t $i "$VG ./$BUILD/sample/replica $i $CONFIG $OPT" C-m
+	for (( i = 0; i < 9; i++ )); do
+	    if [ $i -ne 1234 ]; then
+		    tmux send-keys -t $i "$VG ./$BUILD/sample/replica $i $CONFIG $OPT" C-m
+		fi
 	done
 
-	tmux send-keys -t 3 "./$BUILD/sample/client $CONFIG" C-m
-	tmux selectp -t 3
+	tmux send-keys -t 9 "./$BUILD/sample/client $CONFIG" C-m
+	tmux selectp -t 9
 
 	tmux attach-session -t paxos
 	tmux kill-session -t paxos

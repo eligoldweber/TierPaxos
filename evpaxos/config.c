@@ -36,19 +36,21 @@
 #include <sys/stat.h>
 #include <arpa/inet.h>
 
-struct address
-{
-	char* addr;
-	int port;
-};
+//struct address
+//{
+//	char* addr;
+//	int port;
+//};
 
-struct evpaxos_config
-{
-	int proposers_count;
-	int acceptors_count;
-	struct address proposers[MAX_N_OF_PROPOSERS];
-	struct address acceptors[MAX_N_OF_PROPOSERS];
-};
+//struct evpaxos_config
+//{
+//	int proposers_count;
+//	int acceptors_count;
+//	int cluster_num;
+//	int cluster_size;
+//	struct address proposers[MAX_N_OF_PROPOSERS];
+//	struct address acceptors[MAX_N_OF_PROPOSERS];
+//};
 
 enum option_type
 {
@@ -167,6 +169,11 @@ int
 evpaxos_acceptor_count(struct evpaxos_config* config)
 {
 	return config->acceptors_count;
+}
+int
+evpaxos_cluster_count(struct evpaxos_config* config)
+{
+    return config->cluster_size;
 }
 
 struct sockaddr_in
@@ -305,6 +312,17 @@ parse_line(struct evpaxos_config* c, char* line)
 	
 	line = strtrim(line);
 	tok = strsep(&line, sep);
+
+    if (strcasecmp(tok, "cluster_num") == 0) {
+        c->cluster_num = atoi(line);
+        rv = parse_integer(line, &c->cluster_num);
+        return rv;
+    }
+    if (strcasecmp(tok, "cluster_size") == 0) {
+        c->cluster_size = atoi(line);
+        rv = parse_integer(line, &c->cluster_size);
+        return rv;
+    }
 	
 	if (strcasecmp(tok, "a") == 0 || strcasecmp(tok, "acceptor") == 0) {
 		if (c->acceptors_count >= MAX_N_OF_PROPOSERS) {

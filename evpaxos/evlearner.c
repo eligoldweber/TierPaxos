@@ -95,7 +95,8 @@ struct evlearner*
 evlearner_init_internal(struct evpaxos_config* config, struct peers* peers,
 	deliver_function f, void* arg)
 {
-	int acceptor_count = evpaxos_acceptor_count(config);
+//	int acceptor_count = evpaxos_acceptor_count(config);
+	int acceptor_count = evpaxos_cluster_count(config);
 	struct event_base* base = peers_get_event_base(peers);
 	struct evlearner* learner = malloc(sizeof(struct evlearner));
 	
