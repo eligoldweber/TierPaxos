@@ -253,7 +253,7 @@ int
 main(int argc, char const *argv[])
 {
 	int i = 1;
-	int proposer_id = 0;
+	int proposer_id = 3;
 	int outstanding = 1;
 	int value_size = 64;
 	struct timeval seed;

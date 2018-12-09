@@ -65,8 +65,9 @@ evpaxos_replica_init(int id, const char* config_file, deliver_function f,
 	
 	r->acceptor = evacceptor_init_internal(id, config, r->peers);
 	r->proposer = evproposer_init_internal(id, config, r->peers);
+    int qSize =  (config->cluster_size + 2 - 1) / 2;
 	r->learner  = evlearner_init_internal(config, r->peers,
-		evpaxos_replica_deliver, r);
+		evpaxos_replica_deliver, r,qSize);
 	r->deliver = f;
 	r->arg = arg;
 
