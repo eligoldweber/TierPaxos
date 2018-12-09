@@ -15,7 +15,7 @@ tmux_test ()  {
 	done
 
 	for (( i = 0; i < 9; i++ )); do
-	    if [ $i -ne 1234 ]; then
+	    if [ $i -ne 331 ]; then
 		    tmux send-keys -t $i "$VG ./$BUILD/sample/replica $i $CONFIG $OPT" C-m
 		fi
 	done
