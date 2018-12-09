@@ -114,6 +114,9 @@ int evpaxos_replica_count(struct evpaxos_replica* replica);
 struct evlearner* evlearner_init(const char* config, deliver_function f,
 	void* arg, struct event_base* base);
 
+struct evlearner* evlearner_init_client(const char* config, deliver_function f,
+								 void* arg, struct event_base* base);
+
 /**
  * Release the memory allocated by the learner
  */

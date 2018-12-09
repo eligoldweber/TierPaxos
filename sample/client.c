@@ -207,7 +207,7 @@ make_client(const char* config, int proposer_id, int outstanding, int value_size
 	event_add(c->stats_ev, &c->stats_interval);
 	
 	paxos_config.learner_catch_up = 0;
-	c->learner = evlearner_init(config, on_deliver, c, c->base);
+	c->learner = evlearner_init_client(config, on_deliver, c, c->base);
 	
 	c->sig = evsignal_new(c->base, SIGINT, handle_sigint, c->base);
 	evsignal_add(c->sig, NULL);

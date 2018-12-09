@@ -131,6 +131,21 @@ evlearner_init(const char* config_file, deliver_function f, void* arg,
 	return l;
 }
 
+struct evlearner*
+evlearner_init_client(const char* config_file, deliver_function f, void* arg,
+			   struct event_base* b)
+{
+	struct evpaxos_config* c = evpaxos_config_read(config_file);
+	if (c == NULL) return NULL;
+
+	struct peers* peers = peers_new(b, c);
+	peers_connect_to_acceptors_client(peers);
+	struct evlearner* l = evlearner_init_internal(c, peers, f, arg);
+
+	evpaxos_config_free(c);
+	return l;
+}
+
 void
 evlearner_free_internal(struct evlearner* l)
 {
