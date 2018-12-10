@@ -220,8 +220,14 @@ instance_update(struct instance* inst, paxos_accepted* accepted, int acceptors)
 			accepted->iid);
 		return;
 	}
-	
-	paxos_accepted* prev_accepted = inst->acks[accepted->aid % acceptors ];
+
+
+	int acceptor_id = accepted->aid % acceptors;
+	if(acceptor_id == 0){
+		acceptor_id = accepted->aid / acceptors;
+	}
+
+	paxos_accepted* prev_accepted = inst->acks[acceptor_id];
 	if (prev_accepted != NULL && prev_accepted->ballot >= accepted->ballot) {
 		paxos_log_debug("Dropped paxos_accepted for iid %u."
 			"Previous ballot is newer or equal.", accepted->iid);
@@ -273,11 +279,15 @@ instance_has_quorum(struct instance* inst, int acceptors)
 static void
 instance_add_accept(struct instance* inst, paxos_accepted* accepted, int acceptors)
 {
-	int acceptor_id = accepted->aid;
-	if (inst->acks[acceptor_id % acceptors] != NULL)
-		paxos_accepted_free(inst->acks[acceptor_id %3 ]);
-	inst->acks[acceptor_id % acceptors] = paxos_accepted_dup(accepted);
-	inst->last_update_ballot = accepted->ballot;
+
+    int acceptor_id = accepted->aid % acceptors;
+    if(acceptor_id == 0){
+        acceptor_id = accepted->aid / acceptors;
+    }
+    if (inst->acks[acceptor_id] != NULL)
+        paxos_accepted_free(inst->acks[acceptor_id]);
+    inst->acks[acceptor_id] = paxos_accepted_dup(accepted);
+    inst->last_update_ballot = accepted->ballot;
 }
 
 /*

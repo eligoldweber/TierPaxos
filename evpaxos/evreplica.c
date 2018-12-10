@@ -62,11 +62,15 @@ evpaxos_replica_init(int id, const char* config_file, deliver_function f,
 	r->peers = peers_new(base, config);
 //	peers_connect_to_acceptors(r->peers);
     peers_connect_to_acceptors_TIER(r->peers,config,id);
+//
+	struct peers* leaders = peers_new(base, config);
+	peers_connect_to_leaders(leaders,config,id);
+
 	
 	r->acceptor = evacceptor_init_internal(id, config, r->peers);
-	r->proposer = evproposer_init_internal(id, config, r->peers);
+	r->proposer = evproposer_init_internal(id, config, r->peers,leaders);
 	r->learner  = evlearner_init_internal(config, r->peers,
-		evpaxos_replica_deliver, r);
+		evpaxos_replica_deliver, r,0);
 	r->deliver = f;
 	r->arg = arg;
 

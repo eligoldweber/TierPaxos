@@ -159,6 +159,16 @@ peers_connect_to_acceptors_TIER(struct peers* p, struct evpaxos_config* config,i
 }
 
 void
+peers_connect_to_leaders(struct peers* p, struct evpaxos_config* config,int id)
+{
+	int i;
+	for (i = 0; i < p->config->cluster_num; i++) {
+		struct sockaddr_in addr = evpaxos_acceptor_address(p->config, i*p->config->cluster_num);
+		peers_connect(p, i, &addr);
+	}
+}
+
+void
 peers_foreach_acceptor(struct peers* p, peer_iter_cb cb, void* arg)
 {
 	int i;

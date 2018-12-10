@@ -42,6 +42,7 @@ struct evproposer
 	struct peers* peers;
 	struct timeval tv;
 	struct event* timeout_ev;
+	struct peers* leaders;
 };
 
 
@@ -131,12 +132,15 @@ evproposer_handle_client_value(struct peer* p, paxos_message* msg, void* arg)
 		fwd.type = msg->type;
 		fwd.u.client_value = msg->u.client_value;
 		fwd.u.client_value.from_client = 0;
-		peers_foreach_acceptor(proposer->peers, peer_fwd_client, &fwd);
-	}
-	proposer_propose(proposer->state,
-		v->value.paxos_value_val,
-		v->value.paxos_value_len);
-	try_accept(proposer);
+		peers_foreach_acceptor(proposer->leaders, peer_fwd_client, &fwd);
+		//TODO: Examine here for Double Msg sending
+		//Ex: Client -> R0 then R0 forwards to R0,R3,R6
+	}else {
+        proposer_propose(proposer->state,
+                         v->value.paxos_value_val,
+                         v->value.paxos_value_len);
+        try_accept(proposer);
+    }
 }
 
 static void
@@ -177,7 +181,7 @@ evproposer_preexec_once(evutil_socket_t fd, short event, void *arg)
 }
 
 struct evproposer*
-evproposer_init_internal(int id, struct evpaxos_config* c, struct peers* peers)
+evproposer_init_internal(int id, struct evpaxos_config* c, struct peers* peers, struct peers* leader)
 {
 	struct evproposer* p;
 //	int acceptor_count = evpaxos_acceptor_count(c);
@@ -185,6 +189,8 @@ evproposer_init_internal(int id, struct evpaxos_config* c, struct peers* peers)
 	p = malloc(sizeof(struct evproposer));
 	p->id = id;
 	p->preexec_window = paxos_config.proposer_preexec_window;
+	p->leaders = leader;
+
 
 	peers_subscribe(peers, PAXOS_PROMISE, evproposer_handle_promise, p);
 	peers_subscribe(peers, PAXOS_ACCEPTED, evproposer_handle_accepted, p);
@@ -225,11 +231,15 @@ evproposer_init(int id, const char* config_file, struct event_base* base)
 	
 	struct peers* peers = peers_new(base, config);
 	peers_connect_to_acceptors(peers);
+
+	struct peers* leaders = peers_new(base, config);
+	peers_connect_to_leaders(peers,config,id);
+
 	int port = evpaxos_proposer_listen_port(config, id);
 	int rv = peers_listen(peers, port);
 	if (rv == 0)
 		return NULL;
-	struct evproposer* p = evproposer_init_internal(id, config, peers);
+	struct evproposer* p = evproposer_init_internal(id, config, peers,leaders);
 	evpaxos_config_free(config);
 	return p;
 }
