@@ -94,7 +94,7 @@ learner_set_instance_id(struct learner* l, iid_t iid)
 }
 
 void
-learner_receive_accepted(struct learner* l, paxos_accepted* ack)
+learner_receive_accepted(struct learner* l, paxos_accepted* ack,int qSize)
 {	
 	if (l->late_start) {
 		l->late_start = 0;
@@ -112,7 +112,7 @@ learner_receive_accepted(struct learner* l, paxos_accepted* ack)
 	
 	instance_update(inst, ack, l->acceptors);
 	
-	if (instance_has_quorum(inst, l->acceptors)
+	if (instance_has_quorum(inst, qSize)
 		&& (inst->iid > l->highest_iid_closed))
 		l->highest_iid_closed = inst->iid;
 }

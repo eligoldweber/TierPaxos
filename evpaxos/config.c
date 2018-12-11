@@ -323,6 +323,11 @@ parse_line(struct evpaxos_config* c, char* line)
         rv = parse_integer(line, &c->cluster_size);
         return rv;
     }
+    if (strcasecmp(tok, "client_q_size") == 0) {
+        c->client_q_size = atoi(line);
+        rv = parse_integer(line, &c->client_q_size);
+        return rv;
+    }
 	
 	if (strcasecmp(tok, "a") == 0 || strcasecmp(tok, "acceptor") == 0) {
 		if (c->acceptors_count >= MAX_N_OF_PROPOSERS) {
