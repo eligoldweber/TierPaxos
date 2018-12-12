@@ -176,7 +176,7 @@ void evproposer_set_instance_id(struct evproposer* p, unsigned iid);
 /**
  * Used by clients to submit values to proposers.
  */
-void paxos_submit(struct bufferevent* bev, char* value, int size);
+void paxos_submit(struct bufferevent* bev, char* value, int size, uint32_t from_client);
 
 #ifdef __cplusplus
 }

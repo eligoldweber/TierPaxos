@@ -99,7 +99,7 @@ client_submit_value(struct client* c)
 	v->size = c->value_size;
 	random_string(v->value, v->size);
 	size_t size = sizeof(struct client_value) + v->size;
-	paxos_submit(c->bev, c->send_buffer, size);
+	paxos_submit(c->bev, c->send_buffer, size, 1);
 }
 
 // Returns t2 - t1 in microseconds.
@@ -253,7 +253,7 @@ int
 main(int argc, char const *argv[])
 {
 	int i = 1;
-	int proposer_id = 0;
+	int proposer_id = 3;
 	int outstanding = 1;
 	int value_size = 64;
 	struct timeval seed;

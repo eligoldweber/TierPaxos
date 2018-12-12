@@ -211,14 +211,16 @@ void msgpack_unpack_paxos_acceptor_state(msgpack_object* o, paxos_acceptor_state
 
 void msgpack_pack_paxos_client_value(msgpack_packer* p, paxos_client_value* v)
 {
-	msgpack_pack_array(p, 2);
+	msgpack_pack_array(p, 3);
 	msgpack_pack_int32(p, PAXOS_CLIENT_VALUE);
+	msgpack_pack_uint32(p, v->from_client);
 	msgpack_pack_paxos_value(p, &v->value);
 }
 
 void msgpack_unpack_paxos_client_value(msgpack_object* o, paxos_client_value* v)
 {
 	int i = 1;
+	msgpack_unpack_uint32_at(o, &v->from_client, &i);
 	msgpack_unpack_paxos_value_at(o, &v->value, &i);
 }
 

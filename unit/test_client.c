@@ -58,7 +58,7 @@ connect_to_proposer(struct test_client* c, const char* config, int proposer_id)
 void
 test_client_submit_value(struct test_client* c, int value)
 {
-	paxos_submit(c->bev, (char*)&value, sizeof(int));
+	paxos_submit(c->bev, (char*)&value, sizeof(int), 1);
 	event_base_dispatch(c->base);
 }
 

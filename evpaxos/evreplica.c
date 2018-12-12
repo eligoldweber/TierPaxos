@@ -62,11 +62,16 @@ evpaxos_replica_init(int id, const char* config_file, deliver_function f,
 	r->peers = peers_new(base, config);
 //	peers_connect_to_acceptors(r->peers);
     peers_connect_to_acceptors_TIER(r->peers,config,id);
-	
+//
+	struct peers* leaders = peers_new(base, config);
+	peers_connect_to_leaders(leaders,config,id);
+
+
 	r->acceptor = evacceptor_init_internal(id, config, r->peers);
-	r->proposer = evproposer_init_internal(id, config, r->peers);
+	r->proposer = evproposer_init_internal(id, config, r->peers,leaders);
+    int qSize =  (config->cluster_size + 2 - 1) / 2;
 	r->learner  = evlearner_init_internal(config, r->peers,
-		evpaxos_replica_deliver, r);
+		evpaxos_replica_deliver, r,0,qSize);
 	r->deliver = f;
 	r->arg = arg;
 
@@ -121,7 +126,8 @@ evpaxos_replica_submit(struct evpaxos_replica* r, char* value, int size)
 	for (i = 0; i < peers_count(r->peers); ++i) {
 		p = peers_get_acceptor(r->peers, i);
 		if (peer_connected(p)) {
-			paxos_submit(peer_get_buffer(p), value, size);
+			//TODO: investigate peer_get_buffer. may need to set flag off here
+			paxos_submit(peer_get_buffer(p), value, size, 0);
 			return;
 		}
 	}
