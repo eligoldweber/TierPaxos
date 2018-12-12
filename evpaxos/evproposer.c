@@ -132,15 +132,17 @@ evproposer_handle_client_value(struct peer* p, paxos_message* msg, void* arg)
 		fwd.type = msg->type;
 		fwd.u.client_value = msg->u.client_value;
 		fwd.u.client_value.from_client = 0;
-		peers_foreach_acceptor(proposer->leaders, peer_fwd_client, &fwd);
+
+		int id = proposer->id / 3; //fix later
+		peers_foreach_coleader(id, proposer->leaders, peer_fwd_client, &fwd);
 		//TODO: Examine here for Double Msg sending
 		//Ex: Client -> R0 then R0 forwards to R0,R3,R6
-	}else {
-        proposer_propose(proposer->state,
-                         v->value.paxos_value_val,
-                         v->value.paxos_value_len);
-        try_accept(proposer);
-    }
+		//peers_foreach_acceptor(proposer->leaders, peer_fwd_client, &fwd);
+	}
+    proposer_propose(proposer->state,
+                     v->value.paxos_value_val,
+                     v->value.paxos_value_len);
+    try_accept(proposer);
 }
 
 static void

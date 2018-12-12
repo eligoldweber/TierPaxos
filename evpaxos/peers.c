@@ -176,6 +176,20 @@ peers_foreach_acceptor(struct peers* p, peer_iter_cb cb, void* arg)
 		cb(p->peers[i], arg);
 }
 
+void peers_foreach_coleader(int self_id, struct peers* p, peer_iter_cb cb, void* arg)
+{
+	int i;
+	int j = 0;
+	for (i = 0; i < p->peers_count; ++i) {
+		//printf("self id: %d, other id: %d\n", self_id, p->peers[i]->id);
+		if (self_id != p->peers[i]->id) {
+			++j;
+			cb(p->peers[i], arg);
+		}
+	}
+	//printf("sent %d fwds\n", j);
+}
+
 void
 peers_foreach_client(struct peers* p, peer_iter_cb cb, void* arg)
 {
