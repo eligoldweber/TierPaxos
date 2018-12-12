@@ -1,0 +1,53 @@
+12 Dec 16:58:16. Connect to 35.1.19.168:8800
+12 Dec 16:58:16. Connect to 35.1.19.168:8801
+12 Dec 16:58:16. Connect to 35.1.19.168:8802
+12 Dec 16:58:16. Connect to 35.1.19.168:8803
+12 Dec 16:58:16. Connect to 35.1.19.168:8804
+12 Dec 16:58:16. Connect to 35.1.19.168:8805
+12 Dec 16:58:16. Connect to 35.1.19.168:8806
+12 Dec 16:58:16. Connect to 35.1.19.168:8807
+12 Dec 16:58:16. Connect to 35.1.19.168:8808
+Connected to proposer
+12 Dec 16:58:16. Connected to 35.1.19.168:8800
+12 Dec 16:58:16. Connected to 35.1.19.168:8801
+12 Dec 16:58:16. Connected to 35.1.19.168:8802
+12 Dec 16:58:16. Connected to 35.1.19.168:8803
+12 Dec 16:58:16. Connected to 35.1.19.168:8804
+12 Dec 16:58:16. Connected to 35.1.19.168:8805
+12 Dec 16:58:16. Connected to 35.1.19.168:8806
+12 Dec 16:58:16. Connected to 35.1.19.168:8807
+12 Dec 16:58:16. Connected to 35.1.19.168:8808
+130 value/sec, 0.10 Mbps, latency min 4508 us max 155333 us avg 7473 us
+151 value/sec, 0.11 Mbps, latency min 4566 us max 76837 us avg 6658 us
+171 value/sec, 0.13 Mbps, latency min 4166 us max 7548 us avg 5824 us
+163 value/sec, 0.12 Mbps, latency min 4277 us max 10802 us avg 6169 us
+162 value/sec, 0.12 Mbps, latency min 3880 us max 9814 us avg 6146 us
+162 value/sec, 0.12 Mbps, latency min 4504 us max 11498 us avg 6204 us
+171 value/sec, 0.13 Mbps, latency min 4064 us max 10317 us avg 5840 us
+162 value/sec, 0.12 Mbps, latency min 4044 us max 74685 us avg 6214 us
+169 value/sec, 0.12 Mbps, latency min 4223 us max 7800 us avg 5902 us
+153 value/sec, 0.11 Mbps, latency min 4782 us max 19511 us avg 6540 us
+151 value/sec, 0.11 Mbps, latency min 4945 us max 12847 us avg 6654 us
+151 value/sec, 0.11 Mbps, latency min 4829 us max 8808 us avg 6617 us
+134 value/sec, 0.10 Mbps, latency min 4709 us max 11183 us avg 6992 us
+139 value/sec, 0.10 Mbps, latency min 4288 us max 68580 us avg 7606 us
+137 value/sec, 0.10 Mbps, latency min 4426 us max 71210 us avg 7415 us
+156 value/sec, 0.11 Mbps, latency min 4340 us max 9021 us avg 6401 us
+166 value/sec, 0.12 Mbps, latency min 3642 us max 8885 us avg 6059 us
+166 value/sec, 0.12 Mbps, latency min 3852 us max 9877 us avg 5981 us
+138 value/sec, 0.10 Mbps, latency min 4478 us max 80921 us avg 7288 us
+162 value/sec, 0.12 Mbps, latency min 4404 us max 8143 us avg 6184 us
+166 value/sec, 0.12 Mbps, latency min 4025 us max 8238 us avg 6009 us
+162 value/sec, 0.12 Mbps, latency min 3591 us max 34877 us avg 6172 us
+166 value/sec, 0.12 Mbps, latency min 4298 us max 8614 us avg 6034 us
+169 value/sec, 0.12 Mbps, latency min 3922 us max 8106 us avg 5914 us
+159 value/sec, 0.12 Mbps, latency min 4101 us max 72601 us avg 6350 us
+105 value/sec, 0.08 Mbps, latency min 3766 us max 8136 us avg 5892 us
+87 value/sec, 0.06 Mbps, latency min 4331 us max 465627 us avg 15881 us
+165 value/sec, 0.12 Mbps, latency min 3913 us max 12086 us avg 6056 us
+170 value/sec, 0.12 Mbps, latency min 3787 us max 8823 us avg 5883 us
+154 value/sec, 0.11 Mbps, latency min 4349 us max 13756 us avg 6490 us
+154 value/sec, 0.11 Mbps, latency min 3950 us max 78784 us avg 6519 us
+171 value/sec, 0.13 Mbps, latency min 4037 us max 9927 us avg 5846 us
+174 value/sec, 0.13 Mbps, latency min 3877 us max 8165 us avg 5746 us
+173 value/sec, 0.13 Mbps, latency min 4028 us max 7328 us avg 5788 us
